@@ -1,0 +1,109 @@
+/* UserCreate.css */
+
+/* User container Styles */
+.user-container {
+    width: calc(100vw - 270px); /* Adjusted width to account for sidebar */
+    background-color: rgb(240, 242, 250);
+    margin-top: 5px; /* Padding to touch the upper line */
+    padding-left: 0px; /* Adjusted padding to account for the sidebar width */
+    height: calc(100vh - 20px); /* Adjusted height to account for padding */
+}
+
+/* User Head Styles */
+.user-head {
+    margin-left: 120px;
+    margin-top: 10px;
+}
+
+/* User Create Styles */
+.user-create {
+    width: 60vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 55px;
+    margin-left: 150px;
+    gap: 15px;
+}
+
+/* Area Styles */
+#area {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin: 5px;
+}
+
+.user-create #area label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.user-create #area input,
+.user-create #area textarea,
+.user-create #area select {
+    width: 130%;
+    padding: 0.5 rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+.user-create #area textarea {
+    min-height: 60px; /* Set a minimum height for textarea */
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+.user-create #area {
+    position: relative;
+}
+
+.user-create #area label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    color: #aaa; /* default color for label */
+    transform-origin: left top;
+    transform: translateY(-50%);
+}
+
+.user-create #area input,
+.user-create #area textarea,
+.user-create #area select {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    background-color: transparent;
+    transition: border-color 0.3s;
+    font-size: 1rem;
+}
+
+.user-create #area input:focus,
+.user-create #area textarea:focus,
+.user-create #area select:focus {
+    border-color: #007bff; /* Border color on focus */
+}
+
+.user-create #area input:focus + label,
+.user-create #area textarea:focus + label,
+.user-create #area select:focus + label,
+.user-create #area input:not(:placeholder-shown) + label,
+.user-create #area textarea:not(:placeholder-shown) + label,
+.user-create #area select:not(:placeholder-shown) + label {
+    top: -1rem; /* Move label to upper border */
+    font-size: 0.8rem;
+    color: #007bff; /* Label color on focus or with content */
+}
+
+/* User Button Styles */
+.user-btn {
+    margin-left: 150px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: royalblue;
+}

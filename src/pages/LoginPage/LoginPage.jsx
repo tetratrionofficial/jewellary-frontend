@@ -79,8 +79,7 @@ const Login = ({ setLogin }) => {
   };
 
   return (
-    <div className="flex items-center justify-center">
-    <div className="flex flex-col items-center justify-center bg-blue-100 p-10 rounded-md w-[60vw]">
+    <div className="flex items-center justify-center bg-gray-200 rounded-md w-full h-screen">
       <div className="w-full max-w-sm p-10 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">Login</h2>
         {error && <div className="text-red-600 mb-4">{error}</div>}
@@ -127,7 +126,7 @@ const Login = ({ setLogin }) => {
           </button>
         </div>
       </div>
-    </div>
+    
     </div>
   );
 };

@@ -35,10 +35,12 @@ const SidebarMenu = () => {
     };
 
     return (
-        <div className=' h-[100vh] bg-blue-400 overflow-hidden w-auto'>
+        <div className=' h-[100vh] bg-blue-400 overflow-hidden '>
             <Sidebar
                 collapsed={sidebarCollapsed}
-                width={sidebarCollapsed ? 80 : 250} // Adjust the width here
+                width='300px'
+                collapsedWidth='80px'
+               
                 collapsible
             >
                 <Menu>

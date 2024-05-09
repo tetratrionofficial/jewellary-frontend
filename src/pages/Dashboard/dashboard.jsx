@@ -24,7 +24,7 @@ const Dashboard = () => {
  
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-gray-200 h-screen p-10">
     <div className="flex justify-between items-center mb-8">
       <div className="flex flex-col items-center transition-all duration-500 ease-in-out transform hover:scale-105 ">
         <div className="text-gray-500">Date</div>

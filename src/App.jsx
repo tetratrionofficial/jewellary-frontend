@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import Dashboard from './pages/Dashboard/dashboard';
@@ -15,12 +15,21 @@ function App() {
 
 const [login, setLogin] = useState(true);
 
+useEffect(() => {
+  const token = sessionStorage.getItem('token');
+  if(token){
+    setLogin(false);
+  }
+}
+,[])
+
+
   return (
     <BrowserRouter>
       <div className="h-[100vh] flex ">
       { login ? 
       (
-      <div className='w-full p-12'>
+      <div className='w-full'>
       <Routes>
         <Route path="/" element={<Login setLogin={setLogin}/>} />
         </Routes> 
@@ -28,7 +37,7 @@ const [login, setLogin] = useState(true);
         ): (
           <> 
           <SidebarMenu />
-      <div className='w-full p-12'>
+      <div className='w-full '>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/branch" element={<BranchList />} />

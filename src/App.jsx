@@ -9,6 +9,10 @@ import BranchData from './components/BranchData/BranchData';
 import SidebarMenu from './pages/Sidebar/Sidebar';
 import UserList from './pages/Customer/UserList';
 import Login from './pages/LoginPage/LoginPage';
+import ViewProfile from './pages/Customer/ViewProfile';
+import EditProfile from './pages/Customer/EditProfile';
+import UpdatePassword from './pages/Customer/ChangePassword';
+import CreateCustomer from './pages/Customer/CreateCustomer';
 
 function App() {
 
@@ -45,6 +49,11 @@ useEffect(() => {
           <Route path="/employee" element={<UserList/>} />
           <Route path="/employee/create" element={<UserCreate />} />
           <Route path="/setting" element={<h1>Setting</h1>} />
+          <Route path="/profile" element={<ViewProfile/>} />
+          <Route path="/EditProfile" element={<EditProfile/>} />
+          <Route path="/UpdatePassword" element={<UpdatePassword/>} />
+          <Route path="/CreateCustomer" element={<CreateCustomer/>} />
+
         </Routes>
       </div>
       </>

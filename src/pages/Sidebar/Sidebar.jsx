@@ -11,12 +11,15 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { IoSettings } from "react-icons/io5";
+import { CgProfile } from 'react-icons/cg';
 
 const SidebarMenu = () => {
     const [branchManagementExpanded, setBranchManagementExpanded] = useState(false);
     const [customerManagementExpanded, setCustomerManagementExpanded] = useState(false);
-    const [userManagementExpanded, setUserManagementExpanded] = useState(false);    
+    const [userManagementExpanded, setUserManagementExpanded] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [ProfileExpanded, setProfileExpanded] = useState(false);
+
 
     const toggleBranchManagementExpand = () => {
         setBranchManagementExpanded(!branchManagementExpanded);
@@ -26,8 +29,14 @@ const SidebarMenu = () => {
         setCustomerManagementExpanded(!customerManagementExpanded);
     };
 
+
+
     const toggleUserManagementExpand = () => {
         setUserManagementExpanded(!userManagementExpanded);
+    }
+
+    const toggleProfileExpand = () => {
+        setProfileExpanded(!ProfileExpanded);
     }
 
     const toggleSidebar = () => {
@@ -35,17 +44,24 @@ const SidebarMenu = () => {
     };
 
     return (
-        <div className=' h-[100vh] bg-blue-400 overflow-hidden '>
+        <div className=' h-[100vh]  overflow-hidden  '>
             <Sidebar
                 collapsed={sidebarCollapsed}
                 width='300px'
                 collapsedWidth='80px'
-               
+                className=' h-full '
+
+
+                backgroundColor='#007FFF'
+
                 collapsible
             >
-                <Menu>
+                <Menu
+
+                    className='pt-10'
+                >
                     <div className="flex w-full justify-start ml-6 items-center ">
-                        <button onClick={toggleSidebar} className="text-black my-1">
+                        <button onClick={toggleSidebar} className="text-black bg-blue-100 my-1 rounded-sm">
                             {sidebarCollapsed ? <MenuRoundedIcon /> : <ChevronLeftRoundedIcon />}
                         </button>
                     </div>
@@ -60,9 +76,10 @@ const SidebarMenu = () => {
                         onOpenChange={toggleBranchManagementExpand}
                         rootIconComponent={branchManagementExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
                     >
-                        {/* <MenuItem><Link to='/branch/create'>Create Branch</Link></MenuItem> */}
-                        <MenuItem><Link to='/branch'>Branch List</Link></MenuItem>   
+                        <MenuItem><Link to='/branch/create'>Create Branch</Link></MenuItem>
+                        <MenuItem><Link to='/branch'>Branch List</Link></MenuItem>
                     </SubMenu>
+
                     <SubMenu
                         label='User Management'
                         icon={<AccountCircleRoundedIcon />}
@@ -72,7 +89,7 @@ const SidebarMenu = () => {
                     >
                         <MenuItem><Link to='/employee/create'>Create User</Link></MenuItem>
                         <MenuItem><Link to='/employee'>User List</Link></MenuItem>
-                       
+
                     </SubMenu>
 
                     <SubMenu
@@ -81,18 +98,31 @@ const SidebarMenu = () => {
                         open={customerManagementExpanded}
                         onOpenChange={toggleCustomerManagementExpand}
                         rootIconComponent={customerManagementExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
-                    >  
-                        <MenuItem><Link to='/employee/create'>Create Customer</Link></MenuItem>
+                    >
+                        <MenuItem><Link to='/createCustomer'>Create Customer</Link></MenuItem>
                         <MenuItem><Link to='/employee'>Customer List</Link></MenuItem>
-                        
+
+                    </SubMenu>
+
+                    <SubMenu
+                        label='My Account'
+                        icon={<CgProfile size={25}/>}
+                        open={ProfileExpanded}
+                        onOpenChange={toggleProfileExpand}
+                        rootIconComponent={ProfileExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
+                    >
+                        <MenuItem><Link to='/profile'>View Profile</Link></MenuItem>
+                        <MenuItem><Link to='/editProfile'>Update Profile</Link></MenuItem>
+                        <MenuItem><Link to='/updatePassword'>Change Password</Link></MenuItem>
+
                     </SubMenu>
 
 
 
-                    <MenuItem icon={<IoSettings />}><Link to='/setting'>Setting</Link></MenuItem>
+                 
                 </Menu>
             </Sidebar>
-            
+
         </div>
     );
 };

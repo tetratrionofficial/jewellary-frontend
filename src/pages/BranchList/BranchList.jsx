@@ -1,24 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrashAlt, FaEye } from 'react-icons/fa';
 import BranchDataModal from '../../components/BranchData/BranchDataModal';
 import { Link } from 'react-router-dom'; 
 
 const BranchList = () => {
-  // Dummy data
-  const [dummyData, setDummyData] = useState([
-    {
-      id: 1,
-      branchName: 'Branch A',
-      branchEmail: 'brancha@example.com',
-      branchAddress: {
-        street: '123 Main St',
-        city: 'City A',
-      },
-      branchPhone: '1234567890',
-      branchCode: 'ABC123',
-    },
-    // Add other dummy data
-  ]);
+  // State to store fetched branch data
+  const [branchData, setBranchData] = useState([]);
 
   // State for search query
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +19,19 @@ const BranchList = () => {
   const [editedBranch, setEditedBranch] = useState(null);
   // State to manage view modal visibility
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+  // Fetch data from backend endpoint
+  useEffect(() => {
+    fetch('http://localhost:4005/user/getallbranch')
+      .then(response => response.json())
+      .then(data => {
+        // Set the fetched branch data
+        setBranchData(data.branches);
+      })
+      .catch(error => {
+        console.error('Error fetching branch data:', error);
+      });
+  }, []);
 
   // Function to handle click on "View" button
   const handleViewBranch = (branch) => {
@@ -49,14 +49,29 @@ const BranchList = () => {
 
   // Function to confirm branch deletion
   const handleConfirmDelete = () => {
-    // Filter out the selected branch from dummyData
-    const updatedData = dummyData.filter(item => item.id !== selectedBranch.id);
-    // Update the dummyData state with filtered data
-    setDummyData(updatedData);
-    // Close the delete modal
-    setIsDeleteModalOpen(false);
-    // Clear the selectedBranch state
-    setSelectedBranch(null);
+    // Send DELETE request to backend endpoint
+    fetch(`http://localhost:4005/user/delete-branch/${selectedBranch.id}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (response) {
+        // If deletion is successful, update frontend
+        const updatedBranchData = branchData.filter(branch => branch.id !== selectedBranch.id);
+        setBranchData(updatedBranchData);
+        // Close the delete modal
+        setIsDeleteModalOpen(false);
+        // Clear the selectedBranch state
+        setSelectedBranch(null);
+      } else {
+        // Handle error if deletion fails
+        console.error('Failed to delete branch:', response.statusText);
+        // Optionally, show error message to the user
+      }
+    })
+    .catch(error => {
+      console.error('Error deleting branch:', error);
+      // Optionally, show error message to the user
+    });
   };
 
   // Function to cancel branch deletion
@@ -79,21 +94,7 @@ const BranchList = () => {
 
   // Function to confirm branch edit
   const handleConfirmEdit = () => {
-    // Update the branch data in dummyData
-    const updatedData = dummyData.map(item => {
-      if (item.id === editedBranch.id) {
-        return editedBranch;
-      }
-      return item;
-    });
-    // Update the dummyData state with edited data
-    setDummyData(updatedData);
-    // Close the edit modal
-    setIsEditModalOpen(false);
-    // Clear the selectedBranch state
-    setSelectedBranch(null);
-    // Clear the editedBranch state
-    setEditedBranch(null);
+    // Logic to edit branch in backend goes here
   };
 
   // Function to cancel branch edit
@@ -112,17 +113,17 @@ const BranchList = () => {
   };
 
   // Filtered data based on search query
-  const filteredData = dummyData.filter(
+  const filteredData = branchData.filter(
     item =>
-      item.branchName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.branchEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (item.branchAddress.street.toLowerCase() + ' ' + item.branchAddress.city.toLowerCase()).includes(searchQuery.toLowerCase()) ||
-      item.branchPhone.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.branchCode.toLowerCase().includes(searchQuery.toLowerCase())
+      item.branch_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.branch_email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.address1.toLowerCase() + ' ' + item.address2.toLowerCase()).includes(searchQuery.toLowerCase()) ||
+      item.branch_mobile.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.branch_code.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div>
+    <div className='p-10 h-full bg-gray-200'>
       {/* Heading */}
       <h1 className="text-2xl font-bold mb-4">Branch List</h1>
 
@@ -131,11 +132,11 @@ const BranchList = () => {
         <input
           type="text"
           placeholder="Search..."
-          className="w-full mb-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 h-[7vh]"
+          className="w-full mb-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 h-[6vh]"
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
         />
-        <button className="flex items-center justify-center bg-blue-600 text-white py-5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 h-[20px] w-[180px] mb-[5px]"><Link to="/branch/create">Create Branch</Link></button>
+        <button className="flex items-center justify-center bg-blue-600 text-white py-5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 h-[20px] w-[180px] mb-[5px]">Search</button>
       </div>
 
       {/* Table */}
@@ -156,11 +157,10 @@ const BranchList = () => {
               <tr key={index} className={index % 2 === 0 ? 'bg-blue-50' : 'bg-white'}>
                 <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">{item.id}</td>
-                <td className="border px-4 py-2">{item.branchName}</td>
-                <td className="border px-4 py-2">{item.branchEmail}</td>
-                <td className="border px-4 py-2">{item.branchAddress.street}, {item.branchAddress.city}</td>
+                <td className="border px-4 py-2">{item.branch_name}</td>
+                <td className="border px-4 py-2">{item.branch_email}</td>
+                <td className="border px-4 py-2">{item.address1}, {item.address2}</td>
                 <td className="border px-4 py-2 flex justify-center space-x-2">
-                  {/* Pass the branch data to handleViewBranch */}
                   <button
                     className="text-green-600 hover:text-green-800 focus:outline-none"
                     onClick={() => handleViewBranch(item)}
@@ -186,8 +186,8 @@ const BranchList = () => {
         </table>
       </div>
 
-      {/* Delete Modal */}
-      {isDeleteModalOpen && (
+          {/* Delete Modal */}
+          {isDeleteModalOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             {/* Background overlay */}

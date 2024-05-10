@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaMapMarkerAlt, FaEnvelope, FaBuilding, FaPhone } from 'react-icons/fa';
-import axios from 'axios'
+import axios from 'axios';
 
 const BranchCreate = () => {
     const [formData, setFormData] = useState({
@@ -37,27 +37,6 @@ const BranchCreate = () => {
         });
     };
 
-    // const handleSubmit = async(e) => {
-    //     e.preventDefault();
-    //     Perform form validation
-    //     const errors = validateForm();
-    //     const payload={
-    //         branch_name:formData.branchName,
-    //         branch_code:formData.branchCode,
-    //         address:formData.branchAddress.city,
-    //         branch_email:formData.branchEmail ,
-    //         admin_id : null,
-    //         branch_mobile :formData.phoneNumber
-    //     }
-    //     const response = await axios.post('http://localhost:4005/user/create-branch',)
-    //     // if (Object.keys(errors).length === 0) {
-    //     //     // Do something with form data, like submitting to a server
-    //     //     console.log(formData);
-    //     // } else {
-    //     //     setErrors(errors);
-    //     // }
-    // };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -72,9 +51,12 @@ const BranchCreate = () => {
         const payload = {
             branch_name: formData.branchName,
             branch_code: formData.branchCode,
-            address:formData.branchAddress.city,
+            address1: formData.branchAddress.state, // Adjusted to match backend API field name
+            address2: formData.branchAddress.city, // Adjusted to match backend API field name
+            city: formData.branchAddress.city, // Adjusted to match backend API field name
+            state: formData.branchAddress.state, // Adjusted to match backend API field name
+            pincode: formData.branchAddress.pinCode, // Adjusted to match backend API field name
             branch_email: formData.branchEmail,
-            admin_id: 2,
             branch_mobile: formData.phoneNumber
         };
     
@@ -82,6 +64,25 @@ const BranchCreate = () => {
             // Send POST request to your backend API
             const response = await axios.post('http://localhost:4005/user/create-branch', payload);
             console.log(response.data); // Log the response from the backend
+                if(response.data.message === 'Success') {
+                    alert('Branch created successfully');
+                  setFormData({
+                    branchName: '',
+                    branchEmail: '',
+                    branchAddress: {
+                        state: '',
+                        city: '',
+                        pinCode: '',
+                    },
+                    branchCode: '',
+                    phoneNumber: '',
+                    countryCode: '+91',
+                    });
+
+                } else {
+                    alert('Failed to create branch');
+                }
+
             // Optionally, you can perform further actions based on the response
         } catch (error) {
             console.error('Error creating branch:', error);
@@ -104,8 +105,8 @@ const BranchCreate = () => {
     };
 
     return (
-        <div className="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
+        <div className=" py-8 px-4 sm:px-6 lg:px-8 h-screen">
+            <div className="max-w-4xl mx-auto ">
                 <h1 className="text-2xl font-bold mb-4">Create Branch</h1>
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     {/* Branch Name */}
@@ -219,7 +220,7 @@ const BranchCreate = () => {
                                 name="countryCode"
                                 value={formData.countryCode}
                                 onChange={handleChange}
-                                placeholder="+1"
+                                placeholder="+91"
                                 className="mt-1 mr-2 block w-16 border border-gray-300 rounded-l-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                             <input

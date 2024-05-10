@@ -34,8 +34,8 @@ const UserCreate = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  bg-blue-100 p-12 rounded-md">
-      <div className="w-full max-w-2xl p-8 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col items-center justify-center p-10">
+      
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Create User</h2>
         <div className="flex flex-wrap -mx-4">
           <div className="w-full md:w-1/2 px-4 mb-4">
@@ -126,7 +126,7 @@ const UserCreate = () => {
           </button>
         </div>
       </div>
-    </div>
+    
   );
 };
 

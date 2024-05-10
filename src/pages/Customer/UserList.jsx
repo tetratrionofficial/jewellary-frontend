@@ -1,32 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import Axios
 import { FaEdit, FaTrashAlt, FaEye } from 'react-icons/fa';
-import ViewDataModal from '../../components/UserData/ViewDataModal'; // Import ViewDataModal
+import ViewDataModal from '../../components/UserData/ViewDataModal';
 import DeleteModal from '../../components/UserData/DeleteModal';
 import EditModal from '../../components/UserData/EditModal';
 
 const UserList = () => {
-  const [dummyData, setDummyData] = useState([
-    {
-      id: 1,
-      userName: 'John Doe',
-      email: 'john.doe@example.com',
-      contactNumber: '1234567890',
-      role: 'admin',
-    },
-    // Add other dummy data
-  ]);
-
+  const [userData, setUserData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedUser, setEditedUser] = useState(null);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false); // New state for ViewDataModal
-  const [viewedUser, setViewedUser] = useState(null); // New state for ViewDataModal
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [viewedUser, setViewedUser] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:4005/user/allcustomer');
+      setUserData(response.data.customers);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   const handleViewUser = (user) => {
-    setViewedUser(user); // Set the viewed user
-    setIsViewModalOpen(true); // Open the ViewDataModal
+    setViewedUser(user);
+    setIsViewModalOpen(true);
   };
 
   const handleDeleteUser = (user) => {
@@ -43,6 +47,7 @@ const UserList = () => {
   const handleConfirmDelete = () => {
     setIsDeleteModalOpen(false);
     setSelectedUser(null);
+    // Call API to delete user
   };
 
   const handleCancelDelete = () => {
@@ -54,6 +59,7 @@ const UserList = () => {
     setIsEditModalOpen(false);
     setSelectedUser(null);
     setEditedUser(null);
+    // Call API to update user
   };
 
   const handleCancelEdit = () => {
@@ -63,20 +69,22 @@ const UserList = () => {
   };
 
   const handleCancelView = () => {
-    setIsViewModalOpen(false); // Close the ViewDataModal
-    setViewedUser(null); // Reset the viewed user
+    setIsViewModalOpen(false);
+    setViewedUser(null);
   };
 
-  const filteredData = dummyData.filter(
+  const filteredData = userData.filter(
     (item) =>
-      item.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.contactNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.role.toLowerCase().includes(searchQuery.toLowerCase())
+      item.mobile.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.permanent_address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.aadhaar.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div>
+    <div className="h-screen p-10">
       <h1 className="text-2xl font-bold mb-4">User List</h1>
       <input
         type="text"
@@ -91,10 +99,12 @@ const UserList = () => {
             <tr className="bg-blue-100 text-blue-800">
               <th className="px-4 py-2">#</th>
               <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">User Name</th>
+              <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Contact Number</th>
-              <th className="px-4 py-2">Role</th>
+              <th className="px-4 py-2">Mobile</th>
+              <th className="px-4 py-2">Address</th>
+              <th className="px-4 py-2">Permanent Address</th>
+              <th className="px-4 py-2">Aadhaar</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -103,10 +113,12 @@ const UserList = () => {
               <tr key={index} className={index % 2 === 0 ? 'bg-blue-50' : 'bg-white'}>
                 <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">{item.id}</td>
-                <td className="border px-4 py-2">{item.userName}</td>
+                <td className="border px-4 py-2">{item.name}</td>
                 <td className="border px-4 py-2">{item.email}</td>
-                <td className="border px-4 py-2">{item.contactNumber}</td>
-                <td className="border px-4 py-2">{item.role}</td>
+                <td className="border px-4 py-2">{item.mobile}</td>
+                <td className="border px-4 py-2">{item.address}</td>
+                <td className="border px-4 py-2">{item.permanent_address}</td>
+                <td className="border px-4 py-2">{item.aadhaar}</td>
                 <td className="border px-4 py-2 flex justify-center space-x-2">
                   <button
                     className="text-green-600 hover:text-green-800 focus:outline-none"

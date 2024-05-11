@@ -88,7 +88,7 @@ const SidebarMenu = () => {
                         rootIconComponent={userManagementExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
                     >
                         <MenuItem><Link to='/employee/create'>Create User</Link></MenuItem>
-                        <MenuItem><Link to='/employee'>User List</Link></MenuItem>
+                        <MenuItem><Link to='/userlist'>User List</Link></MenuItem>
 
                     </SubMenu>
 
@@ -100,7 +100,7 @@ const SidebarMenu = () => {
                         rootIconComponent={customerManagementExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
                     >
                         <MenuItem><Link to='/createCustomer'>Create Customer</Link></MenuItem>
-                        <MenuItem><Link to='/employee'>Customer List</Link></MenuItem>
+                        <MenuItem><Link to='/customerlist'>Customer List</Link></MenuItem>
 
                     </SubMenu>
 
@@ -114,6 +114,11 @@ const SidebarMenu = () => {
                         <MenuItem><Link to='/profile'>View Profile</Link></MenuItem>
                         <MenuItem><Link to='/editProfile'>Update Profile</Link></MenuItem>
                         <MenuItem><Link to='/updatePassword'>Change Password</Link></MenuItem>
+                        <MenuItem><a onClick={()=>{
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('user');
+                            window.location.href='/'
+                        }}>Log Out</a></MenuItem>
 
                     </SubMenu>
 

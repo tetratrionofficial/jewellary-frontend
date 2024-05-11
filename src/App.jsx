@@ -7,12 +7,13 @@ import UserCreate from './pages/Customer/UserCreate';
 import BranchList from './pages/BranchList/BranchList';
 import BranchData from './components/BranchData/BranchData';
 import SidebarMenu from './pages/Sidebar/Sidebar';
-import UserList from './pages/Customer/UserList';
+import UserList from './pages/Customer/userList';
 import Login from './pages/LoginPage/LoginPage';
 import ViewProfile from './pages/Customer/ViewProfile';
 import EditProfile from './pages/Customer/EditProfile';
 import UpdatePassword from './pages/Customer/ChangePassword';
 import CreateCustomer from './pages/Customer/CreateCustomer';
+import CustomerList from './pages/Customer/CustomerList';
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
 const [login, setLogin] = useState(true);
 
 useEffect(() => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   if(token){
     setLogin(false);
   }
@@ -46,13 +47,14 @@ useEffect(() => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/branch" element={<BranchList />} />
           <Route path="/branch/create" element={<BranchCreate />} />
-          <Route path="/employee" element={<UserList/>} />
+          <Route path="/userlist" element={<UserList/>} />
+          <Route path="/customerlist" element={<CustomerList/>} />
           <Route path="/employee/create" element={<UserCreate />} />
           <Route path="/setting" element={<h1>Setting</h1>} />
           <Route path="/profile" element={<ViewProfile/>} />
           <Route path="/EditProfile" element={<EditProfile/>} />
           <Route path="/UpdatePassword" element={<UpdatePassword/>} />
-          <Route path="/CreateCustomer" element={<CreateCustomer/>} />
+          <Route path="/createCustomer" element={<CreateCustomer/>} />
 
         </Routes>
       </div>

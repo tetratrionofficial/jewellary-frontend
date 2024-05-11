@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
+import axios from 'axios'; // Import Axios
 import { FaEdit, FaTrashAlt, FaEye } from 'react-icons/fa';
 import ViewDataModal from '../../components/UserData/ViewDataModal';
 import DeleteModal from '../../components/UserData/DeleteModal';
 import EditModal from '../../components/UserData/EditModal';
 
-const UserList = () => {
+const CustomerList = () => {
   const [userData, setUserData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
@@ -21,12 +21,8 @@ const UserList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:4005/user/getalluser');
-      if (response.data.status === 0) {
-        setUserData(response.data.users);
-      } else {
-        console.error('Error fetching user data:', response.data);
-      }
+      const response = await axios.get('http://localhost:4005/user/allcustomer');
+      setUserData(response.data.customers);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -81,7 +77,10 @@ const UserList = () => {
     (item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.mobile.toLowerCase().includes(searchQuery.toLowerCase())
+      item.mobile.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.permanent_address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.aadhaar.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -103,33 +102,39 @@ const UserList = () => {
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Mobile</th>
+              <th className="px-4 py-2">Address</th>
+              <th className="px-4 py-2">Permanent Address</th>
+              <th className="px-4 py-2">Aadhaar</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((user, index) => (
-              <tr key={user.id} className={index % 2 === 0 ? 'bg-blue-50' : 'bg-white'}>
+            {filteredData.map((item, index) => (
+              <tr key={index} className={index % 2 === 0 ? 'bg-blue-50' : 'bg-white'}>
                 <td className="border px-4 py-2">{index + 1}</td>
-                <td className="border px-4 py-2">{user.id}</td>
-                <td className="border px-4 py-2">{user.name}</td>
-                <td className="border px-4 py-2">{user.email}</td>
-                <td className="border px-4 py-2">{user.mobile}</td>
+                <td className="border px-4 py-2">{item.id}</td>
+                <td className="border px-4 py-2">{item.name}</td>
+                <td className="border px-4 py-2">{item.email}</td>
+                <td className="border px-4 py-2">{item.mobile}</td>
+                <td className="border px-4 py-2">{item.address}</td>
+                <td className="border px-4 py-2">{item.permanent_address}</td>
+                <td className="border px-4 py-2">{item.aadhaar}</td>
                 <td className="border px-4 py-2 flex justify-center space-x-2">
                   <button
                     className="text-green-600 hover:text-green-800 focus:outline-none"
-                    onClick={() => handleViewUser(user)}
+                    onClick={() => handleViewUser(item)}
                   >
                     <FaEye />
                   </button>
                   <button
                     className="text-blue-600 hover:text-blue-800 focus:outline-none"
-                    onClick={() => handleEditUser(user)}
+                    onClick={() => handleEditUser(item)}
                   >
                     <FaEdit />
                   </button>
                   <button
                     className="text-red-600 hover:text-red-800 focus:outline-none"
-                    onClick={() => handleDeleteUser(user)}
+                    onClick={() => handleDeleteUser(item)}
                   >
                     <FaTrashAlt />
                   </button>
@@ -168,4 +173,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default CustomerList;

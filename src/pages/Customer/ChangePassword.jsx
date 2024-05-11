@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import Axios for making HTTP requests
 
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const UpdatePassword = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Perform password validation
@@ -23,17 +24,32 @@ const UpdatePassword = () => {
       return;
     }
 
-    // Perform password update logic here
-    // ...
+    try {
+      // Make HTTP request to update password
+      const response = await axios.put('http://localhost:4005/user/update-password/1', {
+        currentPassword: formData.currentPassword,
+        newPassword: formData.newPassword,
+        confirmNewPassword: formData.confirmNewPassword,
+      });
 
-    // Reset form and show success message
+      // Check response status and show appropriate message
+      if (response.status === 200) {
+        setShowSuccessMessage(true);
+        setShowErrorMessage(false);
+      }
+    } catch (error) {
+      // Handle error and show error message
+      console.error('Error updating password:', error);
+      setShowSuccessMessage(false);
+      setShowErrorMessage(true);
+    }
+
+    // Reset form fields
     setFormData({
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: '',
     });
-    setShowSuccessMessage(true);
-    setShowErrorMessage(false);
   };
 
   return (
@@ -48,7 +64,7 @@ const UpdatePassword = () => {
           )}
           {showErrorMessage && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-              <strong>Error!</strong> New password and confirm password do not match.
+              <strong>Error!</strong> Unable to update password. Please try again.
             </div>
           )}
           <form onSubmit={handleSubmit}>

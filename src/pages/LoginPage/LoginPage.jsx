@@ -67,10 +67,17 @@ const Login = ({ setLogin }) => {
     try {
       const response = await axios.post('http://localhost:4005/user/login', {email:loginData.numberOrEmail,password:loginData.password});
        console.log(response)
-       sessionStorage.setItem("token",response.data.token);
-      if (response.data) {
-        setLogin(false);
-      }
+       if(response.data.token === undefined){
+         setError(response.data)
+       }
+
+       if(response.data.token !== undefined){
+        localStorage.setItem('token',response.data.token);
+        localStorage.setItem('user',JSON.stringify(response.data.user));
+         setLogin(false)
+       }
+       
+      
       // Handle successful login, e.g., redirect user to dashboard
     } catch (error) {
       console.error('Error logging in:', error);

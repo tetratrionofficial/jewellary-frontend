@@ -5,7 +5,7 @@ import ViewDataModal from '../../components/UserData/ViewDataModal';
 import DeleteModal from '../../components/UserData/DeleteModal';
 import EditModal from '../../components/UserData/EditModal';
 
-const UserList = () => {
+const UsersList = () => {
   const [userData, setUserData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);

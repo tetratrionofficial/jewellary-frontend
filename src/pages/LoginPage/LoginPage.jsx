@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const Login = ({ setLogin }) => {
   const [loginData, setLoginData] = useState({
@@ -124,13 +125,17 @@ const Login = ({ setLogin }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-4">
           <button
-            className="py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            className="py-2 px-6  bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
             onClick={handleSubmit}
           >
             Login
           </button>
+        </div>
+         {/* Add "Forgot Password" link */}
+         <div className="text-start mt-4">
+          <Link to="/reset-password" className="text-blue-600 underline">Forgot Password?</Link>
         </div>
       </div>
     

@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaEye, FaEnvelope, FaPhone, FaMapMarkerAlt, FaBuilding } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 
-const ViewDataModal = ({ isOpen, onClose, user }) => {
+const ViewDataModal = ({ isOpen, onClose, user , branches}) => {
   if (!isOpen || !user) return null;
 
   return (
@@ -21,10 +21,17 @@ const ViewDataModal = ({ isOpen, onClose, user }) => {
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3 className="text-lg font-medium text-gray-900" id="modal-headline">
-                  View User
+                  Customer Details:
                 </h3>
-                {/* Branch data */}
-                <BranchData branch={user} />
+                {/* Display user details */}
+                <p><strong>Name:</strong> {user.name}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+                <p><strong>Mobile:</strong> {user.mobile}</p>
+                <p><strong>Address:</strong> {user.address}</p>
+                <p><strong>Branch:</strong> {branches.find(branch => branch.id == user.branch_id)?.branch_name
+                }</p>
+                <p><strong>Plan:</strong> {user.plan_id == 1 ? 'Plan A' : 'Plan B'}</p>
+                {/* Add more details as needed */}
               </div>
             </div>
           </div>

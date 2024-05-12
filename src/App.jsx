@@ -16,6 +16,7 @@ import CreateCustomer from './pages/Customer/CreateCustomer';
 import CustomerList from './pages/Customer/CustomerList';
 import CreateGoldRate from './pages/addData/addGoldrate';
 import { Toaster } from 'react-hot-toast';
+import ResetPassword from './pages/LoginPage/ResetPassword';
 
 function App() {
 
@@ -39,6 +40,7 @@ useEffect(() => {
       <div className='w-full'>
       <Routes>
         <Route path="/" element={<Login setLogin={setLogin}/>} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         </Routes> 
       </div>
         ): (
@@ -59,6 +61,7 @@ useEffect(() => {
           <Route path="/UpdatePassword" element={<UpdatePassword/>} />
           <Route path="/createCustomer" element={<CreateCustomer/>} />
           <Route path="addgoldrate" element={<CreateGoldRate/>} />
+         
 
 
         </Routes>

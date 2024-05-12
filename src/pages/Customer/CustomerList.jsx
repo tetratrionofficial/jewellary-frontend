@@ -221,11 +221,12 @@ const CustomerList = () => {
         setEditedUser={setEditedUser}
       />
 
-      {/* ViewDataModal */}
+      {/* View Modal */}
       <ViewDataModal
         isOpen={isViewModalOpen}
         onClose={handleCancelView}
         user={viewedUser}
+        branches={branches}
       />
     </div>
   );

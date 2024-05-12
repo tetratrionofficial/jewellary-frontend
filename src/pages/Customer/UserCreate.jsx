@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, Toaster } from "react-hot-toast";
 
 const UserCreate = () => {
   const [userData, setUserData] = useState({
@@ -34,17 +35,24 @@ const UserCreate = () => {
   };
 
   const handleSubmit = async () => {
+    if (!userData.branch_id || !userData.name || !userData.email || !userData.mobile || !userData.role || !userData.password || !userData.confirmPassword) {
+      toast.error('All fields are required.');
+      return;
+    }
     if (userData.password !== userData.confirmPassword) {
-      alert('Confirm password does not match with password.');
+      toast.error('Confirm password does not match with password.');
       return;
     }
     try {
       const response = await axios.post('http://localhost:4005/user/create-user', userData);
       console.log(response.data);
-      if (response.data) {
-        alert('User created successfully');
-      } else {
-        alert('User creation failed');
+      if (response.data.status==0) {
+        toast.success('User created successfully');
+      } else if (response.data.status==1) {
+        toast.error(response.data.message);
+      }
+      else {
+        toast.error('Error creating user');
       }
 
       setUserData({

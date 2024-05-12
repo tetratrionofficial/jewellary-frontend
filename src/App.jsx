@@ -15,6 +15,7 @@ import UpdatePassword from './pages/Customer/ChangePassword';
 import CreateCustomer from './pages/Customer/CreateCustomer';
 import CustomerList from './pages/Customer/CustomerList';
 import CreateGoldRate from './pages/addData/addGoldrate';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -44,6 +45,7 @@ useEffect(() => {
           <> 
           <SidebarMenu />
       <div className='w-full '>
+      <div><Toaster/></div>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/branch" element={<BranchList />} />

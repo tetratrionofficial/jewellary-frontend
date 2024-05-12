@@ -8,19 +8,73 @@ import customerImage from "../../assets/customer.png";
 const Dashboard = () => {
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [goldRate, setGoldRate] = useState(null); // State to store gold rate
+  const [customers, setCustomers] = useState([]); // State to store customers
+  const [employees, setEmployees] = useState([]); // State to store employees
+  const [branches, setBranches] = useState([]); // State to store branches
 
   useEffect(() => {
+    // Function to fetch gold rate
+    const fetchGoldRate = async () => {
+      try {
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token'),
+        };
+        const response = await axios.get('http://localhost:4005/user/goldrate/1', { headers });
+        const { data } = response.data;
+        setGoldRate(data.gold_rate); // Update gold rate state with fetched data
+      } catch (error) {
+        console.error('Error fetching gold rate:', error);
+      }
+    };
+
+    // Function to fetch all customers
+    const fetchAllCustomers = async () => {
+      try {
+        const response = await axios.get('http://localhost:4005/user/allcustomer');
+        setCustomers(response.data.customers); // Update customers state with fetched data
+      } catch (error) {
+        console.error('Error fetching customers:', error);
+      }
+    };
+
+
+    const fetchAllBranches = async () => {
+      try {
+        const response = await axios.get('http://localhost:4005/user/getallbranch');
+        setBranches(response.data.branches); // Update branches state with fetched data
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      }
+    };
+
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get('http://localhost:4005/user/getalluser');
+        setEmployees(response.data.users);
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
+    }
+    fetchEmployees();
+
+    // Fetch gold rate and all customers when component mounts
+    fetchAllBranches();
+    fetchGoldRate();
+    fetchAllCustomers();
+
     // Update date and time every second
     const intervalId = setInterval(() => {
       setDate(new Date().toLocaleDateString());
       setTime(new Date().toLocaleTimeString());
     }, 1000);
 
+    // Clear interval on component unmount
     return () => {
       clearInterval(intervalId);
     };
   }, []);
-
  
 
   return (
@@ -41,29 +95,28 @@ const Dashboard = () => {
       <div className="bg-white p-4 rounded-lg shadow-md flex items-center transition-all duration-500 ease-in-out transform hover:scale-105">
         <img src={goldImage} alt="Gold" className="w-12 h-12 mr-4" />
         <div>
-          <div className="text-gray-600 font-semibold">Gold Rate</div>
-          <div className="text-xl font-bold">$68000</div>
+        <div className="text-xl font-bold">{goldRate ? `₹${goldRate}` : 'Loading...'}</div>
         </div>
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md flex items-center transition-all duration-500 ease-in-out transform hover:scale-105">
         <img src={branchImage} alt="Branch" className="w-12 h-12 mr-4" />
         <div>
-          <div className="text-gray-600 font-semibold">Branch</div>
-          <div className="text-xl font-bold">50</div>
+          <div className="text-gray-600 font-semibold"> Branches</div>
+          <div className="text-xl font-bold">{branches.length}</div>
         </div>
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md flex items-center transition-all duration-500 ease-in-out transform hover:scale-105">
         <img src={employeeImage} alt="Employee" className="w-12 h-12 mr-4" />
         <div>
           <div className="text-gray-600 font-semibold">Employee</div>
-          <div className="text-xl font-bold">200</div>
+          <div className="text-xl font-bold">{employees.length}</div>
         </div>
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md flex items-center transition-all duration-500 ease-in-out transform hover:scale-105">
         <img src={customerImage} alt="Customer" className="w-12 h-12 mr-4" />
         <div>
           <div className="text-gray-600 font-semibold">Customer</div>
-          <div className="text-xl font-bold">1000</div>
+          <div className="text-xl font-bold">{customers.length}</div>
         </div>
       </div>
     </div>

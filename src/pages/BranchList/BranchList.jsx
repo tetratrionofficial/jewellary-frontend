@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrashAlt, FaEye } from 'react-icons/fa';
 import BranchDataModal from '../../components/BranchData/BranchDataModal';
 import { Link } from 'react-router-dom'; 
+import axios from 'axios';
 
 const BranchList = () => {
   // State to store fetched branch data
@@ -50,9 +51,11 @@ const BranchList = () => {
   // Function to confirm branch deletion
   const handleConfirmDelete = () => {
     // Send DELETE request to backend endpoint
-    fetch(`http://localhost:4005/user/delete-branch/${selectedBranch.id}`, {
-      method: 'DELETE'
-    })
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token'),
+    };
+    axios.delete(`http://localhost:4005/user/delete-branch/${selectedBranch.id}`, { headers })
     .then(response => {
       if (response) {
         // If deletion is successful, update frontend

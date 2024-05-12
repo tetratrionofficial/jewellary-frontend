@@ -12,6 +12,7 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { IoSettings } from "react-icons/io5";
 import { CgProfile } from 'react-icons/cg';
+import { StorageRounded } from '@mui/icons-material';
 
 const SidebarMenu = () => {
     const [branchManagementExpanded, setBranchManagementExpanded] = useState(false);
@@ -19,6 +20,9 @@ const SidebarMenu = () => {
     const [userManagementExpanded, setUserManagementExpanded] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [ProfileExpanded, setProfileExpanded] = useState(false);
+    const [adddataExpanded, setadddataExpanded] = useState(false);
+
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
 
     const toggleBranchManagementExpand = () => {
@@ -43,6 +47,10 @@ const SidebarMenu = () => {
         setSidebarCollapsed(!sidebarCollapsed);
     };
 
+    const adddataExpand = () => {
+        setadddataExpanded(!adddataExpanded);
+    }
+
     return (
         <div className=' h-[100vh]  overflow-hidden  '>
             <Sidebar
@@ -56,7 +64,7 @@ const SidebarMenu = () => {
 
                 collapsible
             >
-                <Menu
+               <Menu
 
                     className='pt-10'
                 >
@@ -68,7 +76,10 @@ const SidebarMenu = () => {
                 </Menu>
 
                 <Menu>
-                    <MenuItem icon={<GridViewRoundedIcon />}><Link to='/'>Dashboard</Link></MenuItem>
+
+                    {
+                        user.role=='SUPER_ADMIN' ? (<>
+                          <MenuItem icon={<GridViewRoundedIcon />}><Link to='/'>Dashboard</Link></MenuItem>
                     <SubMenu
                         label='Branch Management'
                         icon={<BusinessRoundedIcon />}
@@ -91,7 +102,22 @@ const SidebarMenu = () => {
                         <MenuItem><Link to='/userlist'>User List</Link></MenuItem>
 
                     </SubMenu>
+                    <SubMenu
+                        label='Add data'
+                        icon={<StorageRounded />}
+                        open={adddataExpanded}
+                        onOpenChange={adddataExpand}
+                        rootIconComponent={adddataExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
+                    >
+                        <MenuItem><Link to='/addgoldrate'>Add Gold Rate</Link></MenuItem>
+                        <MenuItem><Link to='/'>Add EMI Duration</Link></MenuItem>
 
+                    </SubMenu>
+
+                        </>) : null
+
+                    }
+                  
                     <SubMenu
                         label='Customer Management'
                         icon={<PeopleRoundedIcon />}

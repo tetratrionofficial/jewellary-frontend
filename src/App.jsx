@@ -14,6 +14,7 @@ import EditProfile from './pages/Customer/EditProfile';
 import UpdatePassword from './pages/Customer/ChangePassword';
 import CreateCustomer from './pages/Customer/CreateCustomer';
 import CustomerList from './pages/Customer/CustomerList';
+import CreateGoldRate from './pages/addData/addGoldrate';
 
 function App() {
 
@@ -55,6 +56,8 @@ useEffect(() => {
           <Route path="/EditProfile" element={<EditProfile/>} />
           <Route path="/UpdatePassword" element={<UpdatePassword/>} />
           <Route path="/createCustomer" element={<CreateCustomer/>} />
+          <Route path="addgoldrate" element={<CreateGoldRate/>} />
+
 
         </Routes>
       </div>

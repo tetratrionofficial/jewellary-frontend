@@ -103,7 +103,6 @@ const CustomerList = () => {
               <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Mobile</th>
               <th className="px-4 py-2">Address</th>
-              <th className="px-4 py-2">Permanent Address</th>
               <th className="px-4 py-2">Aadhaar</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
@@ -117,7 +116,6 @@ const CustomerList = () => {
                 <td className="border px-4 py-2">{item.email}</td>
                 <td className="border px-4 py-2">{item.mobile}</td>
                 <td className="border px-4 py-2">{item.address}</td>
-                <td className="border px-4 py-2">{item.permanent_address}</td>
                 <td className="border px-4 py-2">{item.aadhaar}</td>
                 <td className="border px-4 py-2 flex justify-center space-x-2">
                   <button

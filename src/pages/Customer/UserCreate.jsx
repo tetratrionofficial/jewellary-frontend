@@ -3,9 +3,9 @@ import axios from 'axios';
 
 const UserCreate = () => {
   const [userData, setUserData] = useState({
-    userName: '',
+    name: '',
     email: '',
-    contactNumber: '',
+    mobile: '',
     role: '',
     password: '',
     confirmPassword: '',
@@ -24,27 +24,22 @@ const UserCreate = () => {
     try {
       const response = await axios.post('http://localhost:4005/user/create-user', userData);
       console.log(response.data);
-      // Optionally, you can show a success message or redirect the user after successful creation
-      if(response.status === 200) {
+      if (response.status === 200) {
         alert('User created successfully');
-      }
-      else {
+      } else {
         alert('User creation failed');
       }
 
       setUserData({
-        userName: '',
+        name: '',
         email: '',
-        contactNumber: '',
+        mobile: '',
         role: '',
         password: '',
         confirmPassword: '',
       });
-
     } catch (error) {
       console.error('Error creating user:', error);
-
-      // Optionally, you can show an error message to the user
     }
   };
 
@@ -53,14 +48,14 @@ const UserCreate = () => {
       <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Create User</h2>
       <div className="flex flex-wrap -mx-4">
         <div className="w-full md:w-1/2 px-4 mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="userName">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
             User Name
           </label>
           <input
             className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="text"
-            name="userName"
-            value={userData.userName}
+            name="name"
+            value={userData.name}
             onChange={handleChange}
           />
         </div>
@@ -77,14 +72,14 @@ const UserCreate = () => {
           />
         </div>
         <div className="w-full md:w-1/2 px-4 mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="contactNumber">
-            Contact Number
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="mobile">
+            Mobile
           </label>
           <input
             className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="tel"
-            name="contactNumber"
-            value={userData.contactNumber}
+            name="mobile"
+            value={userData.mobile}
             onChange={handleChange}
           />
         </div>
@@ -101,9 +96,8 @@ const UserCreate = () => {
             <option value="" disabled>
               Select Role
             </option>
-            <option value="admin">Admin</option>
-            <option value="manager">Manager</option>
-            <option value="employee">Employee</option>
+            <option value="EMP">Sales Person</option>
+            <option value="BRANCH_ADMIN">Branch Admin</option>
           </select>
         </div>
         <div className="w-full md:w-1/2 px-4 mb-4">

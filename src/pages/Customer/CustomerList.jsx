@@ -85,7 +85,7 @@ const CustomerList = () => {
 
   return (
     <div className="h-screen p-10">
-      <h1 className="text-2xl font-bold mb-4">User List</h1>
+      <h1 className="text-2xl font-bold mb-4">Customer List</h1>
       <input
         type="text"
         placeholder="Search..."

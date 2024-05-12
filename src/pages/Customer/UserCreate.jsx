@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const UserCreate = () => {
@@ -9,7 +9,24 @@ const UserCreate = () => {
     role: '',
     password: '',
     confirmPassword: '',
+    branch_id: '',
   });
+
+  const [branches, setBranches] = useState([]);
+
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const response = await axios.get('http://localhost:4005/user/getallbranch');
+        setBranches(response.data.branches);
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      }
+    };
+
+    fetchBranches();
+
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +41,7 @@ const UserCreate = () => {
     try {
       const response = await axios.post('http://localhost:4005/user/create-user', userData);
       console.log(response.data);
-      if (response.status === 200) {
+      if (response.data) {
         alert('User created successfully');
       } else {
         alert('User creation failed');
@@ -47,6 +64,26 @@ const UserCreate = () => {
     <div className="flex flex-col items-center justify-center p-10">
       <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Create User</h2>
       <div className="flex flex-wrap -mx-4">
+
+        <div className="w-full md:w-1/2 px-4 mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="branch_id">
+            Select Branch
+          </label>
+          <select
+            id="branch_id"
+            name="branch_id"
+            value={userData.branch_id}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select a branch</option>
+            {branches.map((branch) => (
+              <option key={branch.id} value={branch.id}>
+                {branch.branch_name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="w-full md:w-1/2 px-4 mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
             User Name

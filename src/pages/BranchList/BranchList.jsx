@@ -23,7 +23,7 @@ const BranchList = () => {
 
   // Fetch data from backend endpoint
   useEffect(() => {
-    fetch('http://localhost:4005/user/getallbranch')
+    fetch(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getallbranch')
       .then(response => response.json())
       .then(data => {
         // Set the fetched branch data
@@ -55,7 +55,7 @@ const BranchList = () => {
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token'),
     };
-    axios.delete(`http://localhost:4005/user/delete-branch/${selectedBranch.id}`, { headers })
+    axios.delete(`${import.meta.env.VITE_API_ENDPOINT}/user/delete-branch/${selectedBranch.id}`, { headers })
     .then(response => {
       if (response) {
         // If deletion is successful, update frontend

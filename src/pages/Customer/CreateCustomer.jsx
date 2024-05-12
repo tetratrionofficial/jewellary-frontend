@@ -29,7 +29,7 @@ const CreateCustomer = () => {
 
     const fetchBranches = async () => {
       try {
-        const response = await axios.get('http://localhost:4005/user/getallbranch');
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getallbranch');
         setBranches(response.data.branches);
       } catch (error) {
         console.error('Error fetching branches:', error);
@@ -42,7 +42,7 @@ const CreateCustomer = () => {
 
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://localhost:4005/user/getalluser');
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getalluser');
         setEmployees(response.data.users);
       } catch (error) {
         console.error('Error fetching employees:', error);
@@ -62,7 +62,7 @@ const CreateCustomer = () => {
     e.preventDefault();
     try {
       const monthlyEmi = formData.amount / emiDuration;
-      const response = await axios.post('http://localhost:4005/user/create-customer', {
+      const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/create-customer', {
         ...formData,
         monthlyEmi,
       });

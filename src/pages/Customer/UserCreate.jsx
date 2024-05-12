@@ -18,7 +18,7 @@ const UserCreate = () => {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await axios.get('http://localhost:4005/user/getallbranch');
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getallbranch');
         setBranches(response.data.branches);
       } catch (error) {
         console.error('Error fetching branches:', error);
@@ -44,7 +44,7 @@ const UserCreate = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:4005/user/create-user', userData);
+      const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/create-user', userData);
       console.log(response.data);
       if (response.data.status==0) {
         toast.success('User created successfully');
@@ -67,6 +67,9 @@ const UserCreate = () => {
       console.error('Error creating user:', error);
     }
   };
+  
+
+  
 
   return (
     <div className="flex flex-col items-center justify-center p-10">

@@ -66,7 +66,7 @@ const Login = ({ setLogin }) => {
     // }
   
     try {
-      const response = await axios.post('http://localhost:4005/user/login', {email:loginData.numberOrEmail,password:loginData.password});
+      const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/login', {email:loginData.numberOrEmail,password:loginData.password});
        console.log(response)
        if(response.data.token === undefined){
          setError(response.data)

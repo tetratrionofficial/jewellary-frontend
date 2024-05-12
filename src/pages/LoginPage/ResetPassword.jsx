@@ -66,7 +66,7 @@ const ResetPassword = () => {
       setError("Passwords do not match");
       return;
     }
-    // const response = await axios.put('http://localhost:4005/user/update-password', {
+    // const response = await axios.put(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/update-password', {
     //   phoneNumber: phoneNumber,
     //   newPassword: newPassword,
     //   confirmNewPassword: confirmPassword,

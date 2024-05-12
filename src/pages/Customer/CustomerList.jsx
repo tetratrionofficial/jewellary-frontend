@@ -26,7 +26,7 @@ const CustomerList = () => {
 
   const fetchBranches = async () => {
     try {
-      const response = await axios.get('http://localhost:4005/user/getallbranch');
+      const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getallbranch');
       setBranches(response.data.branches);
     } catch (error) {
       console.error('Error fetching branches:', error);
@@ -35,7 +35,7 @@ const CustomerList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:4005/user/allcustomer');
+      const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/allcustomer');
       setUserData(response.data.customers);
     } catch (error) {
       console.error('Error fetching user data:', error);

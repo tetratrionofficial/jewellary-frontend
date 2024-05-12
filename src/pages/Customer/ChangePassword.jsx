@@ -26,7 +26,7 @@ const UpdatePassword = () => {
 
     try {
       // Make HTTP request to update password
-      const response = await axios.put('http://localhost:4005/user/update-password/1', {
+      const response = await axios.put(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/update-password/1', {
         currentPassword: formData.currentPassword,
         newPassword: formData.newPassword,
         confirmNewPassword: formData.confirmNewPassword,

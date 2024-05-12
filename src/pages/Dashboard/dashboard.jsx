@@ -21,7 +21,7 @@ const Dashboard = () => {
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('token'),
         };
-        const response = await axios.get('http://localhost:4005/user/goldrate/1', { headers });
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/goldrate/1', { headers });
         const { data } = response.data;
         setGoldRate(data.gold_rate); // Update gold rate state with fetched data
       } catch (error) {
@@ -32,7 +32,7 @@ const Dashboard = () => {
     // Function to fetch all customers
     const fetchAllCustomers = async () => {
       try {
-        const response = await axios.get('http://localhost:4005/user/allcustomer');
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/allcustomer');
         setCustomers(response.data.customers); // Update customers state with fetched data
       } catch (error) {
         console.error('Error fetching customers:', error);
@@ -42,7 +42,7 @@ const Dashboard = () => {
 
     const fetchAllBranches = async () => {
       try {
-        const response = await axios.get('http://localhost:4005/user/getallbranch');
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getallbranch');
         setBranches(response.data.branches); // Update branches state with fetched data
       } catch (error) {
         console.error('Error fetching branches:', error);
@@ -51,7 +51,7 @@ const Dashboard = () => {
 
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://localhost:4005/user/getalluser');
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getalluser');
         setEmployees(response.data.users);
       } catch (error) {
         console.error('Error fetching employees:', error);

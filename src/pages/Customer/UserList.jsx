@@ -21,7 +21,7 @@ const UserList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:4005/user/getalluser');
+      const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/getalluser');
       if (response.data.status === 0) {
         setUserData(response.data.users);
       } else {

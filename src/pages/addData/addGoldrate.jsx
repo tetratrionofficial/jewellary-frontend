@@ -17,7 +17,7 @@ const CreateGoldRate = () => {
         gold_rate: goldRate,
       };
 
-      const response = await axios.put('http://localhost:4005/user/update-goldrate/1', payload, { headers });
+      const response = await axios.put(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/update-goldrate/1', payload, { headers });
       console.log(response.data);
 
       if (response.status === 200) {

@@ -62,7 +62,7 @@ const BranchCreate = () => {
     
         try {
             // Send POST request to your backend API
-            const response = await axios.post('http://localhost:4005/user/create-branch', payload);
+            const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}`+'/user/create-branch', payload);
             console.log(response.data); // Log the response from the backend
                 if(response.data.message === 'Success') {
                     alert('Branch created successfully');

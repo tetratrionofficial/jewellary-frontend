@@ -168,4 +168,4 @@ const UsersList = () => {
   );
 };
 
-export default UserList;
+export default UsersList;

@@ -6,7 +6,6 @@ import BranchCreate from './pages/BranchCreate/BranchCreate';
 import UserCreate from './pages/Customer/UserCreate';
 import BranchList from './pages/BranchList/BranchList';
 import SidebarMenu from './pages/Sidebar/Sidebar';
-import UserList from './pages/Customer/UsersList';
 import Login from './pages/LoginPage/LoginPage';
 import ViewProfile from './pages/Customer/ViewProfile';
 import EditProfile from './pages/Customer/EditProfile';
@@ -16,6 +15,7 @@ import CustomerList from './pages/Customer/CustomerList';
 import CreateGoldRate from './pages/addData/addGoldrate';
 import { Toaster } from 'react-hot-toast';
 import ResetPassword from './pages/LoginPage/ResetPassword';
+import UsersList from './pages/Customer/UsersList';
 
 function App() {
 
@@ -51,7 +51,7 @@ useEffect(() => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/branch" element={<BranchList />} />
           <Route path="/branch/create" element={<BranchCreate />} />
-          <Route path="/userlist" element={<UserList/>} />
+          <Route path="/userlist" element={<UsersList/>} />
           <Route path="/customerlist" element={<CustomerList/>} />
           <Route path="/employee/create" element={<UserCreate />} />
           <Route path="/setting" element={<h1>Setting</h1>} />

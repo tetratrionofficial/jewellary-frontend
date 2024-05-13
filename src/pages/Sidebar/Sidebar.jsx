@@ -126,7 +126,7 @@ const SidebarMenu = () => {
                         rootIconComponent={customerManagementExpanded ? ExpandLessRoundedIcon : ExpandMoreRoundedIcon}
                     >
                         <MenuItem><Link to='/createCustomer'>Create Customer</Link></MenuItem>
-                        <MenuItem><Link to='/customerlist'>Customer List</Link></MenuItem>
+                        <MenuItem><Link to='/allCustomers'>Customer List</Link></MenuItem>
 
                     </SubMenu>
 

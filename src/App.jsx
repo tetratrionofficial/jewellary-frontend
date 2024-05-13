@@ -48,11 +48,11 @@ useEffect(() => {
       <div className='w-full '>
       <div><Toaster/></div>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route index path="/" element={<Dashboard />} />
           <Route path="/branch" element={<BranchList />} />
           <Route path="/branch/create" element={<BranchCreate />} />
           <Route path="/userlist" element={<UsersList/>} />
-          <Route path="/customerlist" element={<CustomerList/>} />
+          <Route path="/allCustomers" element={<CustomerList/>} />
           <Route path="/employee/create" element={<UserCreate />} />
           <Route path="/setting" element={<h1>Setting</h1>} />
           <Route path="/profile" element={<ViewProfile/>} />
